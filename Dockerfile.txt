@@ -4,7 +4,7 @@ WORKDIR /app
 COPY /package*.json /app/
 RUN npm install
 #IT WILL COPY THE ENTIRE DIR FORECAST TO /app/src INSIDE DOCKER
-#he
+#hehe
 COPY . .
 EXPOSE 3000
 CMD [ "npm","start"]
