@@ -20,8 +20,14 @@ jobs:
     - name: Build, deploy to server
       id: build-deploy
       run: |
+        apt-get update -y
+        apt-get -y install rsync
+        apk add rsync && apk add openssh
         mkdir -p ~/.ssh
         ssh-keyscan -H $SSH_ADDRESS  >> ~/.ssh/known_hosts
         echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh ubuntu@$SSH_ADDRESS "cd /var/www/html"
+        npm install
+        npm run build
+        ssh ubuntu@$SSH_ADDRESS "mkdir -p /var/www/html/khanhnt_action"
+        scp -r build/* ubuntu@$SSH_ADDRESS "cd /var/www/html/khanhnt_action"
